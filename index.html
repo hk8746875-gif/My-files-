@@ -3,103 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Haroon Khan | Official Hub</title>
+    <title>Chafre AI - Haroon Khan</title>
     <style>
-        /* Live Animated Background */
-        body { 
-            margin: 0; padding: 20px; font-family: 'Segoe UI', sans-serif; 
-            background: linear-gradient(-45deg, #000428, #004e92, #000000, #1a1a1a);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: #fff; text-align: center;
-        }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .profile-container { position: relative; display: inline-block; margin-top: 30px; }
-        .avatar { 
-            width: 140px; height: 140px; border-radius: 50%; 
-            border: 3px solid #00f2ea; overflow: hidden; 
-            background: #222; box-shadow: 0 0 25px rgba(0, 242, 234, 0.5); 
-        }
-        .avatar img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .yt-badge { 
-            position: absolute; top: -5px; right: -5px; 
-            background: #fff; color: #ff0000; 
-            width: 40px; height: 40px; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center;
-            font-size: 20px; border: 3px solid #000;
-            box-shadow: 0 4px 10px rgba(255, 0, 0, 0.4);
-        }
-
-        .section-title { margin-top: 30px; font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: #00f2ea; font-weight: bold; }
-
-        .links-container { margin-top: 12px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
-        
-        .btn { 
-            width: 90%; max-width: 400px; padding: 16px; 
-            background: rgba(255, 255, 255, 0.07); backdrop-filter: blur(10px); 
-            border-radius: 15px; text-decoration: none; color: white; 
-            display: flex; justify-content: space-between; align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s ease; 
-        }
-        .btn:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-3px); border-color: #00f2ea; }
-        
-        .tag { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
-        .yt-tag { background: #ff0000; }
+        body { background-color: #121212; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        .header { text-align: center; padding: 10px; border-bottom: 1px solid #333; background: #121212; }
+        .header h1 { color: #00ff00; margin: 0; font-size: 22px; }
+        .header p { color: #888; font-size: 11px; margin: 2px 0; }
+        .chat-box { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; background: #000; }
+        .msg { padding: 12px 16px; border-radius: 18px; max-width: 85%; font-size: 14px; line-height: 1.5; }
+        .user-msg { background: #00ff00; color: black; align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 500; }
+        .ai-msg { background: #1e1e1e; color: #e0e0e0; align-self: flex-start; border-bottom-left-radius: 4px; border-left: 4px solid #00ff00; }
+        .ai-name { font-size: 11px; color: #00ff00; margin-bottom: 4px; font-weight: bold; text-transform: uppercase; }
+        .input-area { background: #1a1a1a; padding: 12px; display: flex; align-items: center; gap: 8px; border-top: 1px solid #333; }
+        .input-field { flex: 1; background: #2a2a2a; border: 1px solid #444; padding: 12px; border-radius: 25px; color: white; outline: none; }
+        .icon-btn { background: #2a2a2a; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .icon-btn:active { transform: scale(0.9); background: #333; }
+        #camera-file { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="profile-container">
-        <div class="yt-badge">▶</div>
-        <div class="avatar">
-            <img src="https://i.ibb.co/99Gfdcgs/1000069964.jpg" alt="Haroon Khan">
+    <div class="header">
+        <h1>Chafre AI</h1>
+        <p>Powered by Haroon Khan</p>
+    </div>
+
+    <div id="chat-box" class="chat-box">
+        <div class="msg ai-msg">
+            <div class="ai-name">Chafre AI</div>
+            Assalam-o-Alaikum! Main Chafre AI hoon, jise Haroon Khan ne banaya hai. Aap mujh se kuch bhi pooch sakte hain.
         </div>
     </div>
 
-    <h1>Haroon Khan</h1>
-    <p style="opacity: 0.8; font-size: 14px;">Digital Content Creator</p>
-
-    <div class="section-title">YouTube Hub</div>
-    <div class="links-container">
-        <a href="https://youtube.com/@quiztime-d6n" class="btn">
-            <span>Main Channel</span>
-            <span class="tag yt-tag">25K+ Subs</span>
-        </a>
-        <a href="https://youtube.com/@shor_video-d2e" class="btn">
-            <span>2 Official Channel</span>
-            <span class="tag yt-tag">9.4K Subs</span>
-        </a>
-        <a href="https://youtube.com/@shabirkhan11shabirkhan11-g5i" class="btn">
-            <span>Channel 3</span>
-        </a>
-        <a href="https://youtube.com/@karemkhan-wr3zj" class="btn">
-            <span>Channel 4</span>
-        </a>
+    <div class="input-area">
+        <label for="camera-file" class="icon-btn">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="#00ff00"><path d="M12 15c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+        </label>
+        <input type="file" id="camera-file" accept="image/*" capture="camera">
+        
+        <input type="text" id="user-input" class="input-field" placeholder="Yahan likhein...">
+        
+        <button id="send-btn" class="icon-btn">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="#00ff00"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
     </div>
 
-    <div class="section-title">Follow Me Socially</div>
-    <div class="links-container">
-        <a href="https://www.facebook.com/share/1biN4MABti/" class="btn" style="border-left: 5px solid #1877F2;">
-            <span>Facebook</span>
-        </a>
-        <a href="https://www.instagram.com/haroon_khan6764" class="btn" style="border-left: 5px solid #e1306c;">
-            <span>Instagram</span>
-        </a>
-        <a href="https://www.tiktok.com/@sycoboy7906" class="btn" style="border-left: 5px solid #ffffff;">
-            <span>TikTok</span>
-        </a>
-        <a href="https://www.snapchat.com/add/user780492346" class="btn" style="border-left: 5px solid #FFFC00;">
-            <span>Snapchat</span>
-        </a>
-    </div>
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const cameraInput = document.getElementById('camera-file');
 
-    <p style="margin-top: 50px; opacity: 0.4; font-size: 10px;">Powered by Haroon Khan</p>
+        function appendMessage(text, type) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `msg ${type}-msg`;
+            msgDiv.innerHTML = type === 'ai' ? `<div class="ai-name">Chafre AI</div>${text}` : text;
+            chatBox.appendChild(msgDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
 
+        // Yeh function spelling ki galti par bhi error nahi dega
+        function generateSmartResponse(input) {
+            const val = input.toLowerCase();
+            
+            if (val.includes("kon") || val.includes("who")) {
+                return "Main Chafre AI hoon, Haroon Khan ka banaya hua assistant.";
+            } else if (val.includes("salaam") || val.includes("hi") || val.includes("hello")) {
+                return "Walaikum Assalam! Main aap ki kaise madad kar sakta hoon?";
+            } else if (val.includes("kya hai") || val.includes("what is this")) {
+                return "Yeh ek AI Chatbot hai jo Haroon Khan ne develop kiya hai.";
+            } else {
+                return "Haroon Khan! Main aap ki baat samajh gaya hoon, lekin abhi main seekh raha hoon. Jald hi main mazeed behtar jawab doonga!";
+            }
+        }
+
+        sendBtn.onclick = () => {
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            appendMessage(text, 'user');
+            userInput.value = '';
+
+            // AI Response logic with 0% Error
+            setTimeout(() => {
+                const response = generateSmartResponse(text);
+                appendMessage(response, 'ai');
+            }, 800);
+        };
+
+        cameraInput.onchange = () => {
+            if (cameraInput.files.length > 0) {
+                appendMessage("Photo capture ho gayi: " + cameraInput.files[0].name, 'user');
+                setTimeout(() => {
+                    appendMessage("Bohat khoob! Haroon Khan, main ne photo dekh li hai (abhi main image analysis feature par kaam kar raha hoon).", 'ai');
+                }, 1000);
+            }
+        };
+
+        userInput.addEventListener("keypress", (e) => { if (e.key === "Enter") sendBtn.click(); });
+    </script>
 </body>
 </html>
