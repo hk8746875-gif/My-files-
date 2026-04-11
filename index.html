@@ -15,7 +15,7 @@
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -82,9 +82,9 @@
 
         .typing {
             font-style: italic;
-            font-size: 12px;
+            font-size: 13px;
             color: var(--primary-color);
-            margin-bottom: 10px;
+            margin: 10px 20px;
             display: none;
         }
 
@@ -124,6 +124,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: 0.3s;
         }
     </style>
 </head>
@@ -134,14 +135,14 @@
 </div>
 
 <div id="chat-box" class="chat-container">
-    <div class="msg ai">Assalam-o-Alaikum! Main Chafre AI Pro hoon. Haroon Khan ne mujhe aapki madad ke liye design kiya hai. Poochiye, kya sawal hai aapka?</div>
+    <div class="msg ai">Assalam-o-Alaikum! Main Chafre AI Pro hoon. Poochiye, aaj main aapki kya madad kar sakta hoon?</div>
 </div>
 
-<div id="typing-indicator" class="typing" style="padding-left: 20px;">Chafre AI is thinking...</div>
+<div id="typing" class="typing">Chafre AI soch raha hai...</div>
 
 <div class="input-wrapper">
     <div class="input-area">
-        <input type="text" id="user-input" placeholder="Type your message here..." autocomplete="off">
+        <input type="text" id="user-input" placeholder="Yahan apna sawal likhein..." autocomplete="off">
         <button class="send-btn" id="send-btn">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="black"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
         </button>
@@ -152,14 +153,14 @@
     const chatBox = document.getElementById('chat-box');
     const userInput = document.getElementById('user-input');
     const sendBtn = document.getElementById('send-btn');
-    const typingIndicator = document.getElementById('typing-indicator');
+    const typingLabel = document.getElementById('typing');
 
-    // Gemini API Configuration
+    // APNI SAHI API KEY YAHAN DALEIN
     const API_KEY = "AIzaSyCip_j8T3-C0o2V0BZcvDXocqALkqrBRQg"; 
     const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
-    async function getGeminiResponse(prompt) {
-        typingIndicator.style.display = "block";
+    async function getAIResponse(prompt) {
+        typingLabel.style.display = "block";
         try {
             const response = await fetch(API_URL, {
                 method: "POST",
@@ -170,12 +171,18 @@
             });
 
             const data = await response.json();
+
+            if (data.error) {
+                console.error("Gemini Error:", data.error.message);
+                return "Maaf kijiye, API mein masla hai: " + data.error.message;
+            }
+
             return data.candidates[0].content.parts[0].text;
         } catch (error) {
-            console.error("Error:", error);
-            return "Maaf kijiye, connection mein masla hai. Dobara koshish karein.";
+            console.error("Network Error:", error);
+            return "Connection fail ho gaya. Internet check karein.";
         } finally {
-            typingIndicator.style.display = "none";
+            typingLabel.style.display = "none";
         }
     }
 
@@ -187,21 +194,19 @@
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    async function handleAction() {
-        const val = userInput.value.trim();
-        if (!val) return;
+    async function handleChat() {
+        const text = userInput.value.trim();
+        if (!text) return;
 
-        addMessage(val, 'user');
+        addMessage(text, 'user');
         userInput.value = "";
 
-        const aiResponse = await getGeminiResponse(val);
-        addMessage(aiResponse, 'ai');
+        const aiText = await getAIResponse(text);
+        addMessage(aiText, 'ai');
     }
 
-    sendBtn.onclick = handleAction;
-    userInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") handleAction();
-    });
+    sendBtn.onclick = handleChat;
+    userInput.onkeypress = (e) => { if (e.key === "Enter") handleChat(); };
 </script>
 
 </body>
