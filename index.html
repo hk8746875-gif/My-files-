@@ -5,161 +5,141 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chafre AI - Haroon Khan</title>
     <style>
-        body { background-color: #121212; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        .header { text-align: center; padding: 10px; border-bottom: 1px solid #333; background: #121212; }
-        .header h1 { color: #00ff00; margin: 0; font-size: 22px; }
-        .header p { color: #888; font-size: 11px; margin: 2px 0; }
-        
-        /* Chat Area */
-        .chat-box { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; background: #000; }
-        .msg { padding: 12px 16px; border-radius: 18px; max-width: 85%; font-size: 14px; line-height: 1.5; word-wrap: break-word; }
-        .user-msg { background: #00ff00; color: black; align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 500; }
-        .ai-msg { background: #1e1e1e; color: #e0e0e0; align-self: flex-start; border-bottom-left-radius: 4px; border-left: 4px solid #00ff00; }
-        .ai-name { font-size: 11px; color: #00ff00; margin-bottom: 4px; font-weight: bold; text-transform: uppercase; }
-
-        /* Input Area */
-        .input-area { background: #1a1a1a; padding: 12px; display: flex; align-items: center; gap: 8px; border-top: 1px solid #333; }
-        .input-field { flex: 1; background: #2a2a2a; border: 1px solid #444; padding: 12px; border-radius: 25px; color: white; outline: none; }
-        .icon-btn { background: #2a2a2a; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
-        .icon-btn:active { transform: scale(0.9); background: #333; }
-        #camera-file { display: none; }
-
-        /* Login Screen */
-        #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #121212; z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
-        .login-card { background: #1e1e1e; padding: 30px; border-radius: 15px; display: flex; flex-direction: column; gap: 12px; width: 300px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .login-input { padding: 12px; border-radius: 8px; border: 1px solid #333; background: #2a2a2a; color: white; outline: none; }
-        .login-btn { background: #00ff00; color: black; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .google-btn { background: white; color: #444; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 5px; }
-        .divider { color: #666; font-size: 12px; text-align: center; margin: 5px 0; }
+        body { background: #000; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        #login-screen { position: fixed; inset: 0; background: #121212; z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .google-btn { background: #fff; color: #000; border: none; padding: 12px 25px; border-radius: 30px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 16px; box-shadow: 0 4px 15px rgba(255,255,255,0.2); }
+        .header { padding: 10px; border-bottom: 1px solid #333; text-align: center; background: #111; }
+        .header h1 { color: #00ff00; margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 2px; }
+        .chat-box { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; background: #050505; }
+        .msg { padding: 12px 16px; border-radius: 18px; max-width: 80%; font-size: 15px; line-height: 1.4; position: relative; }
+        .user { background: #00ff00; color: #000; align-self: flex-end; border-bottom-right-radius: 2px; }
+        .ai { background: #222; color: #fff; align-self: flex-start; border-bottom-left-radius: 2px; border-left: 4px solid #00ff00; }
+        .input-area { padding: 12px; display: flex; gap: 10px; background: #111; align-items: center; border-top: 1px solid #333; }
+        input { flex: 1; background: #222; border: 1px solid #444; padding: 12px 18px; border-radius: 25px; color: #fff; outline: none; transition: 0.3s; }
+        input:focus { border-color: #00ff00; }
+        .btn { background: #00ff00; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.2s; }
+        .btn:active { transform: scale(0.9); }
+        #camera-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1500; }
+        video { width: 100%; height: 100%; object-fit: cover; }
+        .close-cam { position: absolute; top: 20px; right: 20px; background: red; color: white; border: none; padding: 10px; border-radius: 5px; z-index: 1600; }
     </style>
 </head>
 <body>
 
-    <div id="login-screen">
-        <h1 style="color:#00ff00; margin-bottom: 5px;">Chafre AI</h1>
-        <p style="color:#888; margin-bottom: 20px;">By Haroon Khan</p>
-        
-        <div class="login-card">
-            <input type="email" id="login-email" class="login-input" placeholder="Email">
-            <input type="password" id="login-pass" class="login-input" placeholder="Password">
-            <button id="login-btn" class="login-btn">Login</button>
-            
-            <div class="divider">OR</div>
-            
-            <button id="google-login-btn" class="google-btn">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18">
-                Sign in with Google
-            </button>
-        </div>
-    </div>
+<div id="login-screen">
+    <h1 style="color:#00ff00; font-size: 40px; margin-bottom: 5px;">Chafre AI</h1>
+    <p style="color:#666; margin-bottom: 30px;">Professional AI Interface by Haroon Khan</p>
+    <button id="login-btn" class="google-btn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20">
+        Sign in with Google
+    </button>
+</div>
 
-    <div class="header">
-        <h1>Chafre AI</h1>
-        <p>Powered by Haroon Khan</p>
-    </div>
+<div id="camera-container">
+    <button class="close-cam" id="stop-cam">Close Camera</button>
+    <video id="video" autoplay playsinline></video>
+</div>
 
-    <div id="chat-box" class="chat-box"></div>
+<div class="header">
+    <h1>Chafre AI</h1>
+</div>
 
-    <div class="input-area">
-        <label for="camera-file" class="icon-btn">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="#00ff00"><path d="M12 15c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
-        </label>
-        <input type="file" id="camera-file" accept="image/*" capture="camera">
-        
-        <input type="text" id="user-input" class="input-field" placeholder="Poochiye...">
-        
-        <button id="send-btn" class="icon-btn">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="#00ff00"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-        </button>
-    </div>
+<div id="chat-box" class="chat-box"></div>
 
-    <script type="module">
-        // Firebase Imports
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+<div class="input-area">
+    <button class="btn" id="cam-btn" title="Open Camera">📷</button>
+    <input type="text" id="user-input" placeholder="Type your message here...">
+    <button class="btn" id="send-btn">➤</button>
+</div>
 
-        // Your Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyCkaDyQ_ixOM8nJXxkBkjzTRTtEsxgs5SM",
-            authDomain: "harooonkhan-b6ba7.firebaseapp.com",
-            projectId: "harooonkhan-b6ba7",
-            storageBucket: "harooonkhan-b6ba7.firebasestorage.app",
-            messagingSenderId: "111405675505",
-            appId: "1:111405675505:web:d574df133c5c2baa9d8a50"
-        };
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
+    // Firebase Configuration from your screenshots
+    const firebaseConfig = {
+        apiKey: "AIzaSyCkaDyQ_ixOM8nJXxkBkjzTRTtEsxgs5SM",
+        authDomain: "harooonkhan-b6ba7.firebaseapp.com",
+        projectId: "harooonkhan-b6ba7",
+        storageBucket: "harooonkhan-b6ba7.firebasestorage.app",
+        messagingSenderId: "111405675505",
+        appId: "1:111405675505:web:d574df133c5c2baa9d8a50"
+    };
 
-        const loginScreen = document.getElementById('login-screen');
-        const chatBox = document.getElementById('chat-box');
-        const userInput = document.getElementById('user-input');
-        const sendBtn = document.getElementById('send-btn');
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
 
-        // --- AUTH LOGIC ---
+    const loginScreen = document.getElementById('login-screen');
+    const chatBox = document.getElementById('chat-box');
+    const userInput = document.getElementById('user-input');
 
-        // 1. Google Login
-        document.getElementById('google-login-btn').onclick = () => {
-            signInWithPopup(auth, provider).catch(err => alert(err.message));
-        };
-
-        // 2. Email Login
-        document.getElementById('login-btn').onclick = () => {
-            const email = document.getElementById('login-email').value;
-            const pass = document.getElementById('login-pass').value;
-            signInWithEmailAndPassword(auth, email, pass).catch(err => alert("Ghalat Email ya Password!"));
-        };
-
-        // 3. Monitor Login State
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                loginScreen.style.display = 'none';
-                if (chatBox.children.length === 0) {
-                    const name = user.displayName || "User";
-                    appendMessage(`Assalam-o-Alaikum ${name}! Main Chafre AI hoon, Haroon Khan ka banaya assistant. Main aap ki kya madad kar sakta hoon?`, 'ai');
-                }
-            } else {
-                loginScreen.style.display = 'flex';
-            }
+    // Login logic
+    document.getElementById('login-btn').onclick = () => {
+        signInWithPopup(auth, provider).catch(err => {
+            alert("Error: " + err.message);
         });
+    };
 
-        // --- CHAT LOGIC ---
-
-        function appendMessage(text, type) {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `msg ${type}-msg`;
-            msgDiv.innerHTML = type === 'ai' ? `<div class="ai-name">Chafre AI</div>${text}` : text;
-            chatBox.appendChild(msgDiv);
-            chatBox.scrollTop = chatBox.scrollHeight;
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            loginScreen.style.display = 'none';
+            addMessage(`Welcome ${user.displayName}! I am Chafre AI.`, 'ai');
+        } else {
+            loginScreen.style.display = 'flex';
         }
+    });
 
-        function getAIResponse(input) {
-            const val = input.toLowerCase();
-            if (val.includes("salaam") || val.includes("hi")) return "Walaikum Assalam! Kaise hain aap?";
-            if (val.includes("kaun") || val.includes("who")) return "Main Chafre AI hoon, jise Haroon Khan ne develop kiya hai.";
-            return "Bohat acha sawal hai! Main abhi mazeed seekh raha hoon taake aapko behtar jawab de sakoon.";
+    // Handle Word Mistakes (kan, kon, etc.)
+    function getResponse(text) {
+        const input = text.toLowerCase().trim();
+        if (input.includes("kon") || input.includes("kan") || input.includes("kaun") || input.includes("who")) {
+            return "Main Chafre AI hoon, jise Haroon Khan ne develop kiya hai.";
         }
+        if (input.includes("salam") || input.includes("hi") || input.includes("hello")) {
+            return "Walaikum Assalam! Main aapki kya madad kar sakta hoon?";
+        }
+        return "That's interesting! I'm still learning and improving every day.";
+    }
 
-        sendBtn.onclick = () => {
-            const text = userInput.value.trim();
-            if (!text) return;
-            appendMessage(text, 'user');
-            userInput.value = '';
-            setTimeout(() => {
-                appendMessage(getAIResponse(text), 'ai');
-            }, 800);
-        };
+    function addMessage(text, type) {
+        const div = document.createElement('div');
+        div.className = `msg ${type}`;
+        div.innerText = text;
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
 
-        // Camera Logic
-        document.getElementById('camera-file').onchange = (e) => {
-            if (e.target.files.length > 0) {
-                appendMessage("Photo capture ho gayi: " + e.target.files[0].name, 'user');
-                setTimeout(() => appendMessage("Haroon Khan, main ne photo dekh li hai (Image analysis jald aaraha hai).", 'ai'), 1000);
-            }
-        };
+    document.getElementById('send-btn').onclick = () => {
+        const val = userInput.value.trim();
+        if (!val) return;
+        addMessage(val, 'user');
+        userInput.value = "";
+        setTimeout(() => addMessage(getResponse(val), 'ai'), 800);
+    };
 
-        userInput.addEventListener("keypress", (e) => { if (e.key === "Enter") sendBtn.click(); });
-    </script>
+    // Camera Logic (Back Camera)
+    const video = document.getElementById('video');
+    const camContainer = document.getElementById('camera-container');
+
+    document.getElementById('cam-btn').onclick = async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ 
+                video: { facingMode: "environment" } 
+            });
+            video.srcObject = stream;
+            camContainer.style.display = 'block';
+        } catch (err) {
+            alert("Camera access denied or not found.");
+        }
+    };
+
+    document.getElementById('stop-cam').onclick = () => {
+        const stream = video.srcObject;
+        const tracks = stream.getTracks();
+        tracks.forEach(track => track.stop());
+        camContainer.style.display = 'none';
+    };
+</script>
 </body>
 </html>
