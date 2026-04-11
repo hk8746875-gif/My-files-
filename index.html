@@ -3,121 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chafre AI - Haroon Khan</title>
+    <title>Chafre AI Premium</title>
     <style>
-        body { background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        #login-screen { position: fixed; inset: 0; background: #121212; z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
-        .google-btn { background: #fff; color: #000; border: none; padding: 12px 25px; border-radius: 30px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 16px; box-shadow: 0 4px 15px rgba(255,255,255,0.1); }
-        .header { padding: 10px; border-bottom: 1px solid #333; text-align: center; background: #111; }
-        .header h1 { color: #00ff00; margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; }
-        .chat-box { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; background: #050505; }
-        .msg { padding: 12px 16px; border-radius: 18px; max-width: 80%; font-size: 15px; line-height: 1.4; }
-        .user { background: #00ff00; color: #000; align-self: flex-end; border-bottom-right-radius: 2px; }
-        .ai { background: #222; color: #fff; align-self: flex-start; border-bottom-left-radius: 2px; border-left: 4px solid #00ff00; }
-        .input-area { padding: 12px; display: flex; gap: 10px; background: #111; border-top: 1px solid #333; align-items: center; }
-        input { flex: 1; background: #222; border: 1px solid #444; padding: 12px 18px; border-radius: 25px; color: #fff; outline: none; transition: 0.3s; }
-        input:focus { border-color: #00ff00; }
-        .btn { background: #00ff00; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        :root {
+            --primary-color: #00ff88;
+            --bg-dark: #0a0a0c;
+            --card-bg: #161b22;
+            --text-main: #e6edf3;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background: radial-gradient(circle at top right, #1a2c23, #0a0a0c);
+        }
+
+        /* Header */
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: rgba(22, 27, 34, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #30363d;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #00ff88, #60efff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: #30363d transparent;
+        }
+
+        .msg {
+            max-width: 85%;
+            padding: 14px 18px;
+            border-radius: 20px;
+            font-size: 16px;
+            line-height: 1.5;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #00ff88 0%, #00bd65 100%);
+            color: #000;
+            font-weight: 500;
+            border-bottom-right-radius: 4px;
+        }
+
+        .ai {
+            align-self: flex-start;
+            background: var(--card-bg);
+            border: 1px solid #30363d;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        /* Input Area */
+        .input-wrapper {
+            padding: 20px;
+            background: rgba(10, 10, 12, 0.9);
+        }
+
+        .input-area {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            background: #1c2128;
+            border: 1px solid #444c56;
+            border-radius: 30px;
+            padding: 6px 15px;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(0,255,136,0.1);
+        }
+
+        input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .send-btn {
+            background: var(--primary-color);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--primary-color);
+        }
     </style>
 </head>
 <body>
 
-<div id="login-screen">
-    <h1 style="color:#00ff00; font-size: 40px; margin-bottom: 10px;">Chafre AI</h1>
-    <p style="color:#888; margin-bottom: 30px;">Created by Haroon Khan</p>
-    <button id="login-btn" class="google-btn">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20">
-        Sign in to Start Chat
-    </button>
-    <p id="error-text" style="color: #ff4444; margin-top: 15px; font-size: 12px; display: none;"></p>
+<div class="header">
+    <h1>CHAFRE AI PRO</h1>
 </div>
 
-<div class="header"><h1>Chafre AI</h1></div>
-<div id="chat-box" class="chat-box"></div>
-<div class="input-area">
-    <input type="text" id="user-input" placeholder="Yahan sawal poochein...">
-    <button class="btn" id="send-btn">➤</button>
+<div id="chat-box" class="chat-container">
+    <div class="msg ai">Assalam-o-Alaikum! Main Chafre AI Pro hoon. Haroon Khan ne mujhe aapki behtareen madad ke liye design kiya hai. Main aapki kya madad kar sakta hoon?</div>
 </div>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+<div class="input-wrapper">
+    <div class="input-area">
+        <input type="text" id="user-input" placeholder="Ask me anything..." autocomplete="off">
+        <button class="send-btn" id="send-btn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="black"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+        </button>
+    </div>
+</div>
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyCkaDyQ_ixOM8nJXxkBkjzTRTtEsxgs5SM",
-        authDomain: "harooonkhan-b6ba7.firebaseapp.com",
-        projectId: "harooonkhan-b6ba7",
-        storageBucket: "harooonkhan-b6ba7.firebasestorage.app",
-        messagingSenderId: "111405675505",
-        appId: "1:111405675505:web:d574df133c5c2baa9d8a50"
-    };
+<script>
+    const chatBox = document.getElementById('chat-box');
+    const userInput = document.getElementById('user-input');
+    const sendBtn = document.getElementById('send-btn');
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
+    // Ultimate Knowledge Base
+    function getAIResponse(text) {
+        const input = text.toLowerCase().trim();
 
-    // Fix for "Missing Initial State" - Set Persistence to Local
-    setPersistence(auth, browserLocalPersistence);
+        // Basic Info
+        if (input.includes("kon") || input.includes("who are you")) return "Main Chafre AI Pro hoon, ek advanced artificial intelligence jise Haroon Khan ne develop kiya hai.";
+        if (input.includes("salam") || input.includes("hello")) return "Walaikum Assalam! Main bilkul theek hoon. Aap sunayein, aaj main aapke liye kya kar sakta hoon?";
 
-    // Login logic using Redirect
-    document.getElementById('login-btn').onclick = () => {
-        signInWithRedirect(auth, provider);
-    };
+        // YouTube & SEO Experts
+        if (input.includes("youtube") || input.includes("seo")) return "YouTube par viral hone ke liye aapko High-Volume keywords aur engaging thumbnails ki zaroorat hoti hai. Kya aapko kisi topic ke liye SEO tags chahiye?";
+        
+        // Technology & Code
+        if (input.includes("code") || input.includes("javascript") || input.includes("html")) return "Coding meri speciality hai! Main aapko scripts likhne aur errors theek karne mein madad kar sakta hoon.";
+        
+        // Animation & Kids
+        if (input.includes("animation") || input.includes("kids")) return "3D animation aur kids content (nursery rhymes) aaj kal bohot trend mein hai. Blender aur Unreal Engine iske liye behtareen hain.";
 
-    // Handle the redirect result properly
-    getRedirectResult(auth).catch((error) => {
-        if (error.code === 'auth/unauthorized-domain') {
-            document.getElementById('error-text').innerText = "Domain error! Please check Authorized Domains.";
-        } else {
-            document.getElementById('error-text').innerText = "Login error: " + error.message;
+        // General Knowledge / "Everything" handler
+        if (input.length > 1) {
+            const genericReplies = [
+                "Ye ek dilchasp sawal hai! Is bare mein mazeed wazahat karein.",
+                "Haroon Khan ne mujhe kaafi information di hai, lekin main rozana mazeed seekh raha hoon.",
+                "Bilkul! Main is par aapki mukammal madad kar sakta hoon. Kya hum shuru karein?",
+                "Zabardast! Aapka point of view kaafi alag aur behtar hai."
+            ];
+            return genericReplies[Math.floor(Math.random() * genericReplies.length)];
         }
-        document.getElementById('error-text').style.display = 'block';
-    });
 
-    // Handle Login State
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            document.getElementById('login-screen').style.display = 'none';
-            if(document.getElementById('chat-box').children.length === 0) {
-                addMessage(`Assalam-o-Alaikum ${user.displayName}! Main Chafre AI hoon, aapki kya madad kar sakta hoon?`, 'ai');
-            }
-        } else {
-            document.getElementById('login-screen').style.display = 'flex';
-        }
-    });
+        return "Maaf kijiye, mujhe samajh nahi aaya. Kya aap dobara puch sakte hain?";
+    }
 
     function addMessage(text, type) {
         const div = document.createElement('div');
         div.className = `msg ${type}`;
         div.innerText = text;
-        const box = document.getElementById('chat-box');
-        box.appendChild(div);
-        box.scrollTop = box.scrollHeight;
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    // AI Responses and Input Handling
-    document.getElementById('send-btn').onclick = () => {
-        const input = document.getElementById('user-input');
-        const val = input.value.trim();
+    function handleAction() {
+        const val = userInput.value.trim();
         if (!val) return;
 
         addMessage(val, 'user');
-        input.value = "";
+        userInput.value = "";
 
-        // Handling spelling mistakes (kan, kon, kaun)
+        // Show typing feel
         setTimeout(() => {
-            const lowVal = val.toLowerCase();
-            let reply = "Zabardast sawal hai! Main abhi seekh raha hoon.";
-            
-            if (lowVal.includes("kon") || lowVal.includes("kan") || lowVal.includes("kaun") || lowVal.includes("who")) {
-                reply = "Main Chafre AI hoon, jise Haroon Khan ne banaya hai!";
-            } else if (lowVal.includes("salam") || lowVal.includes("hi")) {
-                reply = "Walaikum Assalam! Kaise hain aap?";
-            }
-            
-            addMessage(reply, 'ai');
-        }, 800);
-    };
+            const response = getAIResponse(val);
+            addMessage(response, 'ai');
+        }, 600);
+    }
+
+    sendBtn.onclick = handleAction;
+    userInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") handleAction();
+    });
 </script>
+
 </body>
 </html>
