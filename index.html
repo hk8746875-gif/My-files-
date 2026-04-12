@@ -3,129 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chafre AI Premium</title>
+    <title>Chafre AI Pro</title>
     <style>
-        :root {
-            --primary-color: #00ff88;
-            --bg-dark: #0a0a0c;
-            --card-bg: #161b22;
-            --text-main: #e6edf3;
+        :root { 
+            --primary: #00ff88; 
+            --bg: #0a0a0c; 
+            --card: #161b22; 
+            --text: #e6edf3;
         }
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            background: radial-gradient(circle at top right, #1a2c23, #0a0a0c);
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
+            overflow: hidden;
         }
 
-        .header {
-            padding: 20px;
-            text-align: center;
-            background: rgba(22, 27, 34, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #30363d;
+        .header { 
+            padding: 15px; 
+            text-align: center; 
+            border-bottom: 1px solid #30363d; 
+            background: rgba(22, 27, 34, 0.9);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
+        .header h1 { 
+            margin: 0; 
+            font-size: 20px; 
+            color: var(--primary); 
+            text-transform: uppercase;
             letter-spacing: 2px;
-            background: linear-gradient(to right, #00ff88, #60efff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
         }
 
-        .chat-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        .chat-container { 
+            flex: 1; 
+            overflow-y: auto; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            scroll-behavior: smooth;
         }
 
-        .msg {
-            max-width: 85%;
-            padding: 14px 18px;
-            border-radius: 20px;
-            font-size: 16px;
-            line-height: 1.5;
-            animation: fadeIn 0.3s ease;
-            word-wrap: break-word;
+        .msg { 
+            max-width: 80%; 
+            padding: 12px 16px; 
+            border-radius: 18px; 
+            font-size: 15px; 
+            line-height: 1.5; 
+            animation: slideUp 0.3s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes slideUp { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
         }
 
-        .user {
-            align-self: flex-end;
-            background: linear-gradient(135deg, #00ff88 0%, #00bd65 100%);
-            color: #000;
+        .user { 
+            align-self: flex-end; 
+            background: var(--primary); 
+            color: #000; 
+            border-bottom-right-radius: 2px; 
             font-weight: 500;
-            border-bottom-right-radius: 4px;
         }
 
-        .ai {
-            align-self: flex-start;
-            background: var(--card-bg);
-            border: 1px solid #30363d;
-            border-bottom-left-radius: 4px;
+        .ai { 
+            align-self: flex-start; 
+            background: var(--card); 
+            border: 1px solid #30363d; 
+            border-bottom-left-radius: 2px; 
         }
 
-        .typing {
-            font-style: italic;
-            font-size: 13px;
-            color: var(--primary-color);
-            margin: 10px 20px;
-            display: none;
+        .input-wrapper { 
+            padding: 15px; 
+            background: #0a0a0c; 
+            border-top: 1px solid #30363d;
         }
 
-        .input-wrapper {
-            padding: 20px;
-            background: rgba(10, 10, 12, 0.9);
-        }
-
-        .input-area {
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-            background: #1c2128;
+        .input-area { 
+            max-width: 700px; 
+            margin: 0 auto; 
+            display: flex; 
+            background: #1c2128; 
+            border-radius: 30px; 
+            padding: 5px 15px; 
+            align-items: center; 
             border: 1px solid #444c56;
-            border-radius: 30px;
-            padding: 6px 15px;
-            align-items: center;
         }
 
-        input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: white;
-            padding: 12px;
+        input { 
+            flex: 1; 
+            background: transparent; 
+            border: none; 
+            color: white; 
+            padding: 12px; 
+            outline: none; 
             font-size: 16px;
-            outline: none;
         }
 
-        .send-btn {
-            background: var(--primary-color);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s;
+        .send-btn { 
+            background: var(--primary); 
+            border: none; 
+            width: 40px; 
+            height: 40px; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: transform 0.2s;
         }
+
+        .send-btn:hover { transform: scale(1.1); }
+        .send-btn:active { transform: scale(0.9); }
     </style>
 </head>
 <body>
@@ -135,14 +129,12 @@
 </div>
 
 <div id="chat-box" class="chat-container">
-    <div class="msg ai">Assalam-o-Alaikum! Main Chafre AI Pro hoon. Poochiye, aaj main aapki kya madad kar sakta hoon?</div>
+    <div class="msg ai">Assalam-o-Alaikum! Main Chafre AI Pro hoon. Haroon Khan ne mujhe aapki madad ke liye design kiya hai. Poochiye, main aaj aapki kya madad kar sakta hoon?</div>
 </div>
-
-<div id="typing" class="typing">Chafre AI soch raha hai...</div>
 
 <div class="input-wrapper">
     <div class="input-area">
-        <input type="text" id="user-input" placeholder="Yahan apna sawal likhein..." autocomplete="off">
+        <input type="text" id="user-input" placeholder="Type your message here..." autocomplete="off">
         <button class="send-btn" id="send-btn">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="black"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
         </button>
@@ -153,60 +145,51 @@
     const chatBox = document.getElementById('chat-box');
     const userInput = document.getElementById('user-input');
     const sendBtn = document.getElementById('send-btn');
-    const typingLabel = document.getElementById('typing');
 
-    // APNI SAHI API KEY YAHAN DALEIN
-    const API_KEY = "AIzaSyCip_j8T3-C0o2V0BZcvDXocqALkqrBRQg"; 
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    // Intelligent Auto-Replies
+    const replies = [
+        "Behtareen sawal hai! Main jald hi iska jawab doonga.",
+        "Main abhi sabaq seekh raha hoon, Haroon Khan jald hi mujhe update karenge.",
+        "Kya baat hai! Main aapki madad ke liye hamesha hazir hoon.",
+        "Shukriya! Chafre AI ko pasand karne ka.",
+        "Main abhi development phase mein hoon, mazeed features jald aayenge!",
+        "Zabardast! Aap ka din kaisa guzar raha hai?"
+    ];
 
-    async function getAIResponse(prompt) {
-        typingLabel.style.display = "block";
-        try {
-            const response = await fetch(API_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: prompt }] }]
-                })
-            });
-
-            const data = await response.json();
-
-            if (data.error) {
-                console.error("Gemini Error:", data.error.message);
-                return "Maaf kijiye, API mein masla hai: " + data.error.message;
-            }
-
-            return data.candidates[0].content.parts[0].text;
-        } catch (error) {
-            console.error("Network Error:", error);
-            return "Connection fail ho gaya. Internet check karein.";
-        } finally {
-            typingLabel.style.display = "none";
-        }
-    }
-
-    function addMessage(text, type) {
+    function addMessage(text, sender) {
         const div = document.createElement('div');
-        div.className = `msg ${type}`;
+        div.className = `msg ${sender}`;
         div.innerText = text;
         chatBox.appendChild(div);
+        
+        // Auto Scroll
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    async function handleChat() {
-        const text = userInput.value.trim();
-        if (!text) return;
+    function handleChat() {
+        const message = userInput.value.trim();
+        if (!message) return;
 
-        addMessage(text, 'user');
+        // User message add karein
+        addMessage(message, 'user');
         userInput.value = "";
 
-        const aiText = await getAIResponse(text);
-        addMessage(aiText, 'ai');
+        // Fake "Typing" feel ke liye delay
+        setTimeout(() => {
+            const randomReply = replies[Math.floor(Math.random() * replies.length)];
+            addMessage(randomReply, 'ai');
+        }, 800);
     }
 
+    // Click event
     sendBtn.onclick = handleChat;
-    userInput.onkeypress = (e) => { if (e.key === "Enter") handleChat(); };
+
+    // Enter key event
+    userInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            handleChat();
+        }
+    });
 </script>
 
 </body>
